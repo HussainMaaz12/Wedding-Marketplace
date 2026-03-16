@@ -86,7 +86,20 @@ export async function getVendorDashboard(userId: string) {
   await connectDB()
 
   const vendor = await Vendor.findOne({ userId })
-  if (!vendor) throw new Error('Vendor profile not found')
+  if (!vendor) {
+    return {
+      vendorId: null,
+      status: 'PENDING',
+      totalBookings: 0,
+      pendingEnquiries: 0,
+      confirmedBookings: 0,
+      completedBookings: 0,
+      averageRating: 0,
+      totalReviews: 0,
+      pendingPayouts: 0,
+      needsProfileSetup: true
+    }
+  }
 
   const vendorId = vendor._id
 

@@ -5,6 +5,8 @@ import { connectDB } from '@/lib/db'
 import { Vendor } from '@/models'
 import '@/models/Category' // Ensure registered
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'Find Wedding Vendors | WeddingConnect',
   description: 'Search and filter the best wedding vendors including photographers, makeup artists, venues, and more.',
@@ -18,10 +20,10 @@ export default async function VendorsPage({
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) {
   await connectDB()
-  
+
   // Resolve searchParams promise
   const params = await searchParams
-  
+
   const search = typeof params.search === 'string' ? params.search : undefined
   const category = typeof params.category === 'string' ? params.category : undefined
   const city = typeof params.city === 'string' ? params.city : undefined
@@ -40,7 +42,7 @@ export default async function VendorsPage({
   }
   if (category) query.categoryId = category
   if (city) query.city = { $regex: new RegExp(`^${city}$`, 'i') }
-  
+
   if (minPrice || maxPrice) {
     query.startingPrice = {}
     if (minPrice) query.startingPrice.$gte = Number(minPrice)
@@ -63,19 +65,19 @@ export default async function VendorsPage({
     .sort(sortObj)
     .select('-__v -updatedAt -userId -businessEmail -businessPhone -address')
     .lean()
-    
+
   // Convert _id to string for Server Component to Client Component serialization
   const vendors = vendorsResponse.map(v => ({
     ...v,
     _id: v._id.toString(),
-    categoryId: typeof v.categoryId === 'object' && v.categoryId !== null 
+    categoryId: typeof v.categoryId === 'object' && v.categoryId !== null
       ? { ...v.categoryId, _id: (v.categoryId as any)._id.toString() }
       : v.categoryId
   }))
 
   return (
     <main className="min-h-screen bg-[var(--cream)] pb-20">
-      
+
       {/* Directory Header Minimal */}
       <div className="bg-white border-b border-[var(--cream-dkr)] pt-32 pb-12">
         <div className="max-w-7xl mx-auto px-6">
@@ -90,7 +92,7 @@ export default async function VendorsPage({
 
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="flex flex-col lg:flex-row gap-8 items-start">
-          
+
           {/* Sidebar Filters */}
           <aside className="w-full lg:w-72 flex-shrink-0">
             <VendorFilters />
@@ -98,7 +100,7 @@ export default async function VendorsPage({
 
           {/* Results Grid */}
           <section className="flex-grow w-full">
-            
+
             {/* Results Header */}
             <div className="mb-6 flex items-center justify-between">
               <span className="text-sm font-medium tracking-widest uppercase text-[var(--text-muted)]">
@@ -125,7 +127,7 @@ export default async function VendorsPage({
                 </p>
               </div>
             )}
-            
+
           </section>
         </div>
       </div>
