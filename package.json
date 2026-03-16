@@ -1,0 +1,12 @@
+{
+  "name": "wedding-marketplace-root",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix wedding-marketplace run dev",
+    "build": "npm --prefix wedding-marketplace run build",
+    "start": "npm --prefix wedding-marketplace run start",
+    "lint": "npm --prefix wedding-marketplace run lint",
+    "db:seed": "npm --prefix wedding-marketplace run db:seed"
+  }
+}

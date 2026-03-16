@@ -1,0 +1,40 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+
+# next.js
+/wedding-marketplace/.next/
+/wedding-marketplace/out/
+
+# production
+/wedding-marketplace/build
+
+# misc
+.DS_Store
+*.pem
+*.log
+ts_errors.log
+build_output.log
+diff_output.txt
+
+# env files
+.env*
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# Root specific
+/task
